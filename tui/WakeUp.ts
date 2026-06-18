@@ -2,6 +2,7 @@ import { select ,isCancel } from "@clack/prompts";
 import chalk, { Chalk }  from "chalk";
 import figlet from "figlet";
 import Standard from "figlet/fonts/Standard";
+import { log } from "node:console";
 
 const BANNER_FONT= 'ANSI Shadow'
 const SHADOW  = chalk.hex('#5b4d9e');
@@ -32,4 +33,23 @@ export async function runWakeUp() {
 
     printBannerWithShadow(ascii)
     
+    const mode = await select({
+      message:"Which mode do you want to choose ?",
+      options:[
+        {value:"cli" , label:"CLI"},
+        {value:"Telegram" , label:"Telegram"}
+      ]
+    });
+
+    if(isCancel(mode)){
+      process.exit(0);
+    }
+
+    if(mode === "cli"){
+      console.log(chalk.bold("Starting CLI Mode"))
+    }
+
+    else{
+      console.log(chalk.bold("Starting TELEGRAM Mode"))
+    }
 }
